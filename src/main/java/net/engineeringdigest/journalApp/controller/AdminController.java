@@ -2,6 +2,7 @@ package net.engineeringdigest.journalApp.controller;
 
 import java.util.*;
 
+import net.engineeringdigest.journalApp.cache.AppCache;
 import net.engineeringdigest.journalApp.entity.User;
 import net.engineeringdigest.journalApp.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +15,9 @@ import org.springframework.http.HttpStatus;
 public class AdminController {
     @Autowired
     UserService userService;
+
+    @Autowired
+    AppCache appCache;
 
     @GetMapping("/all-users")
     public ResponseEntity<?> getAllUsers() {
@@ -31,5 +35,11 @@ public class AdminController {
     public ResponseEntity<?> createAdminUser(@RequestBody User user) {
         userService.createAdmin(user);
         return new ResponseEntity<>(user.getUserName() + " is now admin", HttpStatus.OK);
+    }
+
+    @GetMapping("/clear-app-cache")
+    public String clearAppCache() {
+        appCache.init();
+        return "App cache cleared successfully";
     }
 }

@@ -3,9 +3,7 @@ package net.engineeringdigest.journalApp.entity;
 
 // this is called POJO - plain old java object
 
-import lombok.Builder;
-import lombok.Data;
-import lombok.NonNull;
+import lombok.*;
 import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
@@ -18,6 +16,8 @@ import java.util.*;
 
 @Data
 @Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class User {
     @Id
     private ObjectId id;
@@ -33,4 +33,7 @@ public class User {
     // it will not store the whole journal it will just keep the ObjectId for reference
     private List<JournalEntry> journalEntries = new ArrayList<>();
     private List<String> roles; // used for authorization
+
+    private String email;
+    private boolean sentimentAnalysis;
 }
